@@ -15,7 +15,7 @@ func _ready():
 	fade_material = $FadeMesh.get_surface_material(0)
 	
 	# Get all fade contributor nodes
-	fade_contributors = get_tree().get_nodes_in_group("fade_contributor");
+	fade_contributors = get_tree().get_nodes_in_group("fade_contributor")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -23,7 +23,10 @@ func _process(delta):
 	var fade = 0.0
 	for f in fade_contributors:
 		fade = max(fade, f.fade_contribution)
-		
+	
+	# Clamp the fade to ensure legal range
+	fade = clamp(fade, 0.0, 1.0)
+	
 	# Adjust the fade level if necessary
 	if fade != current_fade:
 		# Update the current fade

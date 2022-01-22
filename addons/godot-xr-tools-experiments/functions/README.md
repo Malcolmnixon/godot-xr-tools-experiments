@@ -5,9 +5,9 @@ This folder contains a numer of functions that work with the various AR and XR i
 This function is a fade contributor that works with the Fader asset to obscure the players view if their head gets too close to a collider.
 
 The following three properties control collision fading:
-- Collision Layers - Layers detected for collision (make sure to ignore the player themselves)
-- Fade Start Distance - Collision distance where the view starts to be obscured
-- Fade Full Distance - Collision distance where the view is fully obscured
+- collision_layers - Layers detected for collision (make sure to ignore the player themselves)
+- fade_start_distance - Collision distance where the view starts to be obscured
+- fade_full_distance - Collision distance where the view is fully obscured
 
 This function must be added as a child of the ARVRCamera (or the Fader attached to it) so it is located at the players head position. 
 

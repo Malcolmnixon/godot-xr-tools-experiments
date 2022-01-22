@@ -4,14 +4,14 @@ extends Spatial
 ##
 ## @desc:
 ##    This property sets the layers this fade collision checks for.
-export (int, LAYERS_3D_PHYSICS) var collision_layers = 0
+export (int, LAYERS_3D_PHYSICS) var collision_layers = 2
 
 ## Collision distance at which fading begins
 ##
 ## @desc:
 ##    This distance sets how far away from the camera a collision must be to
 ##    begin obscuring the view
-export (float) var fade_start_distance = 0.2
+export (float) var fade_start_distance = 0.3
 
 ## Collision distance for totally obscuring the view
 ##
@@ -42,7 +42,7 @@ func _ready():
 	collision_parameters = PhysicsShapeQueryParameters.new()
 	collision_parameters.collision_mask = collision_layers
 	collision_parameters.set_shape(collision_shape)
-
+	
 	# Get the space to test collisions in
 	space = get_world().direct_space_state
 
@@ -50,7 +50,7 @@ func _ready():
 func _process(delta):
 	# Update the collision parameters to include our global location
 	collision_parameters.transform = global_transform
-
+	
 	# Find closest collision
 	var results = space.get_rest_info(collision_parameters)
 	if "point" in results:
@@ -59,8 +59,7 @@ func _process(delta):
 		var length = delta_pos.length()
 		
 		# Fade based on distance
-		var fade = inverse_lerp(fade_start_distance, fade_full_distance, length)	
-		fade_contribution = clamp(fade, 0.0, 1.0)
+		fade_contribution = inverse_lerp(fade_start_distance, fade_full_distance, length)
 	else:
 		# No collision
 		fade_contribution = 0
