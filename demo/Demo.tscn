@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://addons/godot-xr-tools/assets/RightHand.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/godot-openxr/scenes/first_person_controller_vr.tscn" type="PackedScene" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://addons/godot-xr-tools-experiments/functions/Function_FadeCollision.tscn" type="PackedScene" id=9]
 [ext_resource path="res://addons/godot-xr-tools-experiments/functions/Function_FadeArea.tscn" type="PackedScene" id=10]
 [ext_resource path="res://addons/godot-xr-tools-experiments/objects/FadeArea.tscn" type="PackedScene" id=11]
+[ext_resource path="res://demo/objects/Table.tscn" type="PackedScene" id=12]
+[ext_resource path="res://addons/godot-xr-tools/objects/Object_pickable.tscn" type="PackedScene" id=13]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 20, 0.5, 20 )
@@ -26,6 +28,61 @@ uv1_scale = Vector3( 40, 40, 1 )
 [sub_resource type="BoxShape" id=10]
 extents = Vector3( 15, 2, 15 )
 
+[sub_resource type="ViewportTexture" id=26]
+viewport_path = NodePath("Environment/Pickable Items Table/Label/Viewport")
+
+[sub_resource type="DynamicFontData" id=7]
+font_path = "res://demo/assets/fonts.google.com/OpenSans-VariableFont_wdth,wght.ttf"
+
+[sub_resource type="DynamicFont" id=8]
+size = 40
+font_data = SubResource( 7 )
+
+[sub_resource type="BoxShape" id=14]
+extents = Vector3( 0.1, 0.1, 0.1 )
+
+[sub_resource type="CubeMesh" id=15]
+size = Vector3( 0.2, 0.2, 0.2 )
+
+[sub_resource type="SpatialMaterial" id=16]
+albedo_color = Color( 1, 1, 0, 1 )
+albedo_texture = ExtResource( 4 )
+
+[sub_resource type="SpatialMaterial" id=17]
+albedo_color = Color( 0, 1, 1, 1 )
+albedo_texture = ExtResource( 4 )
+
+[sub_resource type="SpatialMaterial" id=24]
+albedo_color = Color( 0.501961, 1, 0.501961, 1 )
+albedo_texture = ExtResource( 4 )
+
+[sub_resource type="SpatialMaterial" id=20]
+albedo_color = Color( 0, 0.501961, 0, 1 )
+albedo_texture = ExtResource( 4 )
+
+[sub_resource type="SpatialMaterial" id=19]
+render_priority = 1
+flags_transparent = true
+flags_no_depth_test = true
+albedo_color = Color( 1, 0, 0, 0.501961 )
+albedo_texture = ExtResource( 4 )
+
+[sub_resource type="SpatialMaterial" id=21]
+albedo_color = Color( 1, 1, 0.501961, 1 )
+albedo_texture = ExtResource( 4 )
+
+[sub_resource type="CubeMesh" id=22]
+size = Vector3( 0.22, 0.22, 0.22 )
+
+[sub_resource type="SpatialMaterial" id=23]
+render_priority = 1
+flags_transparent = true
+flags_no_depth_test = true
+albedo_color = Color( 1, 1, 1, 0 )
+
+[sub_resource type="ViewportTexture" id=25]
+viewport_path = NodePath("Environment/Collision Test Pillar/Label/Viewport")
+
 [sub_resource type="BoxShape" id=4]
 extents = Vector3( 0.25, 1, 0.25 )
 
@@ -35,16 +92,6 @@ size = Vector3( 0.5, 2, 0.5 )
 [sub_resource type="SpatialMaterial" id=9]
 albedo_texture = ExtResource( 4 )
 uv1_scale = Vector3( 1, 3, 1 )
-
-[sub_resource type="ViewportTexture" id=12]
-viewport_path = NodePath("Environment/Collision Pillar/Sprite3D/Viewport")
-
-[sub_resource type="DynamicFontData" id=7]
-font_path = "res://demo/assets/fonts.google.com/OpenSans-VariableFont_wdth,wght.ttf"
-
-[sub_resource type="DynamicFont" id=8]
-size = 40
-font_data = SubResource( 7 )
 
 [sub_resource type="BoxShape" id=11]
 extents = Vector3( 0.5, 1.5, 0.5 )
@@ -80,37 +127,127 @@ material/0 = SubResource( 3 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 shape = SubResource( 10 )
 
-[node name="Collision Pillar" type="StaticBody" parent="Environment"]
+[node name="Pickable Items Table" parent="Environment" instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -2 )
+
+[node name="Label" type="Sprite3D" parent="Environment/Pickable Items Table"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0 )
+pixel_size = 0.003
+billboard = 1
+texture = SubResource( 26 )
+
+[node name="Viewport" type="Viewport" parent="Environment/Pickable Items Table/Label"]
+size = Vector2( 265, 55 )
+transparent_bg = true
+render_target_v_flip = true
+
+[node name="Label" type="Label" parent="Environment/Pickable Items Table/Label/Viewport"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+text = "Pickable Items"
+
+[node name="Snap Cube" parent="Environment/Pickable Items Table" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.93, 0.2 )
+collision_layer = 4
+collision_mask = 14
+can_sleep = false
+highlight_mesh_instance = NodePath("")
+picked_up_layer = 8
+
+[node name="CollisionShape" parent="Environment/Pickable Items Table/Snap Cube" index="1"]
+shape = SubResource( 14 )
+
+[node name="Cube Mesh" type="MeshInstance" parent="Environment/Pickable Items Table/Snap Cube"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="Precise Cube" parent="Environment/Pickable Items Table" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.167, 0.93, 0.2 )
+collision_layer = 4
+collision_mask = 14
+can_sleep = false
+reset_transform_on_pickup = false
+highlight_mesh_instance = NodePath("")
+picked_up_layer = 8
+
+[node name="CollisionShape" parent="Environment/Pickable Items Table/Precise Cube" index="1"]
+shape = SubResource( 14 )
+
+[node name="Cube Mesh" type="MeshInstance" parent="Environment/Pickable Items Table/Precise Cube"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 17 )
+
+[node name="Highlight Cube" parent="Environment/Pickable Items Table" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.167, 0.93, 0.2 )
+collision_layer = 4
+collision_mask = 14
+can_sleep = false
+reset_transform_on_pickup = false
+highlight_mesh_instance = NodePath("Cube Mesh")
+highlight_material = SubResource( 24 )
+picked_up_layer = 8
+
+[node name="CollisionShape" parent="Environment/Pickable Items Table/Highlight Cube" index="1"]
+shape = SubResource( 14 )
+
+[node name="Cube Mesh" type="MeshInstance" parent="Environment/Pickable Items Table/Highlight Cube"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 20 )
+
+[node name="Highlight Mesh Cube" parent="Environment/Pickable Items Table" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.93, 0.2 )
+collision_layer = 4
+collision_mask = 14
+can_sleep = false
+reset_transform_on_pickup = false
+highlight_mesh_instance = NodePath("Highlight Mesh")
+highlight_material = SubResource( 19 )
+picked_up_layer = 8
+
+[node name="CollisionShape" parent="Environment/Pickable Items Table/Highlight Mesh Cube" index="1"]
+shape = SubResource( 14 )
+
+[node name="Cube Mesh" type="MeshInstance" parent="Environment/Pickable Items Table/Highlight Mesh Cube"]
+mesh = SubResource( 15 )
+material/0 = SubResource( 21 )
+
+[node name="Highlight Mesh" type="MeshInstance" parent="Environment/Pickable Items Table/Highlight Mesh Cube"]
+mesh = SubResource( 22 )
+material/0 = SubResource( 23 )
+
+[node name="Collision Test Pillar" type="StaticBody" parent="Environment"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2 )
 collision_layer = 2
 collision_mask = 0
 
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Collision Pillar"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
-shape = SubResource( 4 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment/Collision Pillar"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
-mesh = SubResource( 5 )
-material/0 = SubResource( 9 )
-
-[node name="Sprite3D" type="Sprite3D" parent="Environment/Collision Pillar"]
+[node name="Label" type="Sprite3D" parent="Environment/Collision Test Pillar"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
 pixel_size = 0.003
 billboard = 1
-texture = SubResource( 12 )
+texture = SubResource( 25 )
 
-[node name="Viewport" type="Viewport" parent="Environment/Collision Pillar/Sprite3D"]
+[node name="Viewport" type="Viewport" parent="Environment/Collision Test Pillar/Label"]
 size = Vector2( 506, 55 )
 transparent_bg = true
 render_target_v_flip = true
 
-[node name="Label" type="Label" parent="Environment/Collision Pillar/Sprite3D/Viewport"]
+[node name="Label" type="Label" parent="Environment/Collision Test Pillar/Label/Viewport"]
 margin_right = 40.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 8 )
 text = "Pillar to test collision fading"
+
+[node name="CollisionShape" type="CollisionShape" parent="Environment/Collision Test Pillar"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+shape = SubResource( 4 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Environment/Collision Test Pillar"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 9 )
 
 [node name="Test Fade Area" type="Spatial" parent="Environment"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -2 )
@@ -172,6 +309,7 @@ refresh_rate = 0.0
 [node name="Function_FadeInOut" parent="FPSController/ARVRCamera/Fader" instance=ExtResource( 8 )]
 
 [node name="Function_FadeCollision" parent="FPSController/ARVRCamera/Fader" instance=ExtResource( 9 )]
+collision_layers = 14
 
 [node name="Function_FadeArea" parent="FPSController/ARVRCamera/Fader" instance=ExtResource( 10 )]
 
@@ -182,8 +320,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03, -0.05, 0.15 )
 max_speed = 3.0
 move_type = 1
 canFly = false
+collision_mask = 1015
 
 [node name="Function_Pickup" parent="FPSController/LeftHandController" index="2" instance=ExtResource( 6 )]
+pickup_range = 0.1
 
 [node name="RightHand" parent="FPSController/RightHandController" index="0" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03, -0.05, 0.15 )
@@ -192,9 +332,15 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03, -0.05, 0.15 )
 smooth_rotation = true
 max_speed = 3.0
 canFly = false
+collision_mask = 1015
 
 [node name="Function_Pickup" parent="FPSController/RightHandController" index="2" instance=ExtResource( 6 )]
+pickup_range = 0.1
 
 [editable path="Environment/Game Area (Fade Area)"]
+[editable path="Environment/Pickable Items Table/Snap Cube"]
+[editable path="Environment/Pickable Items Table/Precise Cube"]
+[editable path="Environment/Pickable Items Table/Highlight Cube"]
+[editable path="Environment/Pickable Items Table/Highlight Mesh Cube"]
 [editable path="Environment/Test Fade Area/Fade Area"]
 [editable path="FPSController"]
