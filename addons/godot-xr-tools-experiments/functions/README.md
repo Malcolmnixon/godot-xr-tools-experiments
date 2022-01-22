@@ -1,5 +1,14 @@
 # Godot XR Tools Functions
-This folder contains a numer of functions that work with the various AR and XR interfaces for the Godot game engine.
+This folder contains a number of functions that work with the various AR and XR interfaces for the Godot game engine.
+
+## Function_FadeArea
+This function is a fade contributor that works with the Fader asset to obscure the players view based on fade regions.
+
+The following three properties control area fading:
+- obscure_rate - The rate at which the fader obscures the view. Full obscuring occurs in 1/obscure_rate seconds.
+- reveal_rate - The rate at which the fader reveals the view. Full reveal occurs in 1/reveal_rate seconds.
+- default_fade - The fade level to use when the player is not in a fade area
+- fade_area_layers - Layer to check for fade areas
 
 ## Function_FadeCollision
 This function is a fade contributor that works with the Fader asset to obscure the players view if their head gets too close to a collider.

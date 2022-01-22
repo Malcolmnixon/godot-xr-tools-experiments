@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/godot-xr-tools-experiments/functions/Function_FadeArea.gd" type="Script" id=1]
+
+[node name="Function_FadeArea" type="Spatial" groups=["fade_contributor"]]
+script = ExtResource( 1 )

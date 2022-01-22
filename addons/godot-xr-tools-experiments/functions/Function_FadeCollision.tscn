@@ -4,5 +4,3 @@
 
 [node name="Function_FadeCollision" type="Spatial" groups=["fade_contributor"]]
 script = ExtResource( 1 )
-collision_layers = 2
-fade_start_distance = 0.3

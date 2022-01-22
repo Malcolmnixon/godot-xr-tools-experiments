@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://addons/godot-xr-tools/assets/RightHand.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/godot-openxr/scenes/first_person_controller_vr.tscn" type="PackedScene" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://addons/godot-xr-tools-experiments/assets/Fader.tscn" type="PackedScene" id=7]
 [ext_resource path="res://addons/godot-xr-tools-experiments/functions/Function_FadeInOut.tscn" type="PackedScene" id=8]
 [ext_resource path="res://addons/godot-xr-tools-experiments/functions/Function_FadeCollision.tscn" type="PackedScene" id=9]
+[ext_resource path="res://addons/godot-xr-tools-experiments/functions/Function_FadeArea.tscn" type="PackedScene" id=10]
+[ext_resource path="res://addons/godot-xr-tools-experiments/objects/FadeArea.tscn" type="PackedScene" id=11]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 20, 0.5, 20 )
@@ -21,6 +23,9 @@ albedo_color = Color( 0.435294, 0.898039, 0.427451, 1 )
 albedo_texture = ExtResource( 4 )
 uv1_scale = Vector3( 40, 40, 1 )
 
+[sub_resource type="BoxShape" id=10]
+extents = Vector3( 15, 2, 15 )
+
 [sub_resource type="BoxShape" id=4]
 extents = Vector3( 0.25, 1, 0.25 )
 
@@ -31,8 +36,8 @@ size = Vector3( 0.5, 2, 0.5 )
 albedo_texture = ExtResource( 4 )
 uv1_scale = Vector3( 1, 3, 1 )
 
-[sub_resource type="ViewportTexture" id=6]
-viewport_path = NodePath("Environment/Pillar/Sprite3D/Viewport")
+[sub_resource type="ViewportTexture" id=12]
+viewport_path = NodePath("Environment/Collision Pillar/Sprite3D/Viewport")
 
 [sub_resource type="DynamicFontData" id=7]
 font_path = "res://demo/assets/fonts.google.com/OpenSans-VariableFont_wdth,wght.ttf"
@@ -40,6 +45,15 @@ font_path = "res://demo/assets/fonts.google.com/OpenSans-VariableFont_wdth,wght.
 [sub_resource type="DynamicFont" id=8]
 size = 40
 font_data = SubResource( 7 )
+
+[sub_resource type="BoxShape" id=11]
+extents = Vector3( 0.5, 1.5, 0.5 )
+
+[sub_resource type="ViewportTexture" id=6]
+viewport_path = NodePath("Environment/Test Fade Area/Sprite3D/Viewport")
+
+[sub_resource type="CubeMesh" id=13]
+size = Vector3( 0.05, 2, 0.05 )
 
 [node name="Demo" type="Spatial"]
 
@@ -60,37 +74,92 @@ shape = SubResource( 1 )
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
-[node name="Pillar" type="StaticBody" parent="Environment"]
+[node name="Game Area (Fade Area)" parent="Environment" instance=ExtResource( 11 )]
+
+[node name="CollisionShape" parent="Environment/Game Area (Fade Area)" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+shape = SubResource( 10 )
+
+[node name="Collision Pillar" type="StaticBody" parent="Environment"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2 )
 collision_layer = 2
 collision_mask = 0
 
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Pillar"]
+[node name="CollisionShape" type="CollisionShape" parent="Environment/Collision Pillar"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 shape = SubResource( 4 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Environment/Pillar"]
+[node name="MeshInstance" type="MeshInstance" parent="Environment/Collision Pillar"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 mesh = SubResource( 5 )
 material/0 = SubResource( 9 )
 
-[node name="Sprite3D" type="Sprite3D" parent="Environment/Pillar"]
+[node name="Sprite3D" type="Sprite3D" parent="Environment/Collision Pillar"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
 pixel_size = 0.003
 billboard = 1
-texture = SubResource( 6 )
+texture = SubResource( 12 )
 
-[node name="Viewport" type="Viewport" parent="Environment/Pillar/Sprite3D"]
+[node name="Viewport" type="Viewport" parent="Environment/Collision Pillar/Sprite3D"]
 size = Vector2( 506, 55 )
 transparent_bg = true
 render_target_v_flip = true
 
-[node name="Label" type="Label" parent="Environment/Pillar/Sprite3D/Viewport"]
+[node name="Label" type="Label" parent="Environment/Collision Pillar/Sprite3D/Viewport"]
 margin_right = 40.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 8 )
 text = "Pillar to test collision fading"
+
+[node name="Test Fade Area" type="Spatial" parent="Environment"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -2 )
+
+[node name="Fade Area" parent="Environment/Test Fade Area" instance=ExtResource( 11 )]
+priority = 1.0
+fade_level = 0.9
+
+[node name="CollisionShape" parent="Environment/Test Fade Area/Fade Area" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
+shape = SubResource( 11 )
+
+[node name="Sprite3D" type="Sprite3D" parent="Environment/Test Fade Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
+pixel_size = 0.003
+billboard = 1
+texture = SubResource( 6 )
+
+[node name="Viewport" type="Viewport" parent="Environment/Test Fade Area/Sprite3D"]
+size = Vector2( 184, 55 )
+transparent_bg = true
+render_target_v_flip = true
+
+[node name="Label" type="Label" parent="Environment/Test Fade Area/Sprite3D/Viewport"]
+margin_right = 40.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+text = "Fade Area"
+
+[node name="Marker 1" type="MeshInstance" parent="Environment/Test Fade Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, 0.5 )
+mesh = SubResource( 13 )
+material/0 = null
+
+[node name="Marker 2" type="MeshInstance" parent="Environment/Test Fade Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, -0.5 )
+mesh = SubResource( 13 )
+material/0 = null
+
+[node name="Marker 3" type="MeshInstance" parent="Environment/Test Fade Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, -0.5 )
+mesh = SubResource( 13 )
+material/0 = null
+
+[node name="Marker 4" type="MeshInstance" parent="Environment/Test Fade Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0.5 )
+mesh = SubResource( 13 )
+material/0 = null
 
 [node name="FPSController" parent="." instance=ExtResource( 2 )]
 
@@ -103,6 +172,8 @@ refresh_rate = 0.0
 [node name="Function_FadeInOut" parent="FPSController/ARVRCamera/Fader" instance=ExtResource( 8 )]
 
 [node name="Function_FadeCollision" parent="FPSController/ARVRCamera/Fader" instance=ExtResource( 9 )]
+
+[node name="Function_FadeArea" parent="FPSController/ARVRCamera/Fader" instance=ExtResource( 10 )]
 
 [node name="LeftHand" parent="FPSController/LeftHandController" index="0" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03, -0.05, 0.15 )
@@ -124,4 +195,6 @@ canFly = false
 
 [node name="Function_Pickup" parent="FPSController/RightHandController" index="2" instance=ExtResource( 6 )]
 
+[editable path="Environment/Game Area (Fade Area)"]
+[editable path="Environment/Test Fade Area/Fade Area"]
 [editable path="FPSController"]
