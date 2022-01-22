@@ -6,7 +6,7 @@ extends Spatial
 ##    This property controls the rate the fader will adjust to obscure the
 ##    view. Larger numeric values will obscure faster. For example a value of 3
 ##    will fully obscure the scene in 1/3rd of a second.
-export (float) var obscure_rate = 3.0
+export var obscure_rate := 3.0
 
 ## Rate to reveal
 ##
@@ -14,25 +14,25 @@ export (float) var obscure_rate = 3.0
 ##     This property controls the rate the fader will adjust to reveal the
 ##     view. Larger numeric values will reveal faster. For example a value of
 ##     3 will fully reveal the scene in 1/3rd of a second.
-export (float) var reveal_rate = 1.0
+export var reveal_rate := 1.0
 
 ## Default fade if not in a fade area
 ##
 ## @desc:
 ##    This property sets the default fade if the player is not in a fade area
-export (float) var default_fade = 1.0
+export var default_fade := 1.0
 
 ## Layers to check
 ##
 ## @desc:
 ##    This property sets the layers this fade area checks for.
-export (int, LAYERS_3D_PHYSICS) var fade_area_layers = 2
+export (int, LAYERS_3D_PHYSICS) var fade_area_layers := 2
 
 # Current fade contribution [0..1] - used by Fader
-var fade_contribution = 0.0
+var fade_contribution := 0.0
 
 # World space to use for collision detection
-var space = null
+var space : PhysicsDirectSpaceState = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

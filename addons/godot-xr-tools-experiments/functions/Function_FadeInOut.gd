@@ -6,7 +6,7 @@ extends Node
 ##    This property controls the rate the fader will adjust to obscure the
 ##    view. Larger numeric values will obscure faster. For example a value of 3
 ##    will fully obscure the scene in 1/3rd of a second.
-export (float) var obscure_rate = 1.0
+export var obscure_rate := 1.0
 
 ## Rate to reveal
 ##
@@ -14,13 +14,13 @@ export (float) var obscure_rate = 1.0
 ##     This property controls the rate the fader will adjust to reveal the
 ##     view. Larger numeric values will reveal faster. For example a value of
 ##     3 will fully reveal the scene in 1/3rd of a second.
-export (float) var reveal_rate = 1.0
+export var reveal_rate := 1.0
 
 ## Initial fade contribution [0..1]
 ##
 ## @desc:
 ##    This property contains the initial fade level at start.
-export (float) var initial_fade = 1.0
+export var initial_fade := 1.0
 
 ## Current fade target [0..1]
 ##
@@ -29,10 +29,10 @@ export (float) var initial_fade = 1.0
 ##    'fade_contribution' will slew to this target based on the 'fade_in_rate'
 ##    and 'fade_out_rate' properties. The user can set this value for an initial
 ##    fade target at start.
-export (float) var fade_target = 0.0
+export var fade_target := 0.0
 
 # Current fade contribution [0..1] - used by Fader
-var fade_contribution = 1.0
+var fade_contribution := 1.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

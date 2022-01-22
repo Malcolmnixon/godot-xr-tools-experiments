@@ -4,33 +4,33 @@ extends Spatial
 ##
 ## @desc:
 ##    This property sets the layers this fade collision checks for.
-export (int, LAYERS_3D_PHYSICS) var collision_layers = 2
+export (int, LAYERS_3D_PHYSICS) var collision_layers := 2
 
 ## Collision distance at which fading begins
 ##
 ## @desc:
 ##    This distance sets how far away from the camera a collision must be to
 ##    begin obscuring the view
-export (float) var fade_start_distance = 0.3
+export var fade_start_distance := 0.3
 
 ## Collision distance for totally obscuring the view
 ##
 ## @desc:
 ##    This distance sets how far away from the camera a collision must be to
 ##    totally obscure the view
-export (float) var fade_full_distance = 0.15
+export var fade_full_distance := 0.15
 
 # Current fade contribution [0..1] - used by Fader
-var fade_contribution = 0.0
+var fade_contribution := 0.0
 
 # Shape to use for collision detection
-var collision_shape = null
+var collision_shape : Shape = null
 
 # Parameters to use for collision detection
-var collision_parameters = null
+var collision_parameters : PhysicsShapeQueryParameters = null
 
 # World space to use for collision detection
-var space = null
+var space : PhysicsDirectSpaceState = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -62,4 +62,4 @@ func _process(delta):
 		fade_contribution = inverse_lerp(fade_start_distance, fade_full_distance, length)
 	else:
 		# No collision
-		fade_contribution = 0
+		fade_contribution = 0.0

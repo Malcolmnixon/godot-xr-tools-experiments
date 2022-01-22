@@ -1,10 +1,10 @@
 extends Spatial
 
 # Current fade level [0..1]
-var current_fade = 0.0
+var current_fade := 0.0
 
 # Material on fade mesh
-var fade_material = null
+var fade_material : Material = null
 
 # Array of fade-contributors
 var fade_contributors = Array()
