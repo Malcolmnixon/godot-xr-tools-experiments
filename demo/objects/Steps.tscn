@@ -1,0 +1,116 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://demo/assets/wahooney.itch.io/white_grid.png" type="Texture" id=1]
+
+[sub_resource type="ViewportTexture" id=37]
+viewport_path = NodePath("Label/Viewport")
+
+[sub_resource type="DynamicFontData" id=7]
+font_path = "res://demo/assets/fonts.google.com/OpenSans-VariableFont_wdth,wght.ttf"
+
+[sub_resource type="DynamicFont" id=8]
+size = 40
+font_data = SubResource( 7 )
+
+[sub_resource type="BoxShape" id=34]
+extents = Vector3( 0.5, 0.1, 0.1 )
+
+[sub_resource type="CubeMesh" id=35]
+size = Vector3( 1, 0.2, 0.2 )
+
+[sub_resource type="SpatialMaterial" id=36]
+albedo_color = Color( 1, 0.501961, 0, 1 )
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 2, 0.2, 1 )
+
+[node name="Steps" type="Spatial"]
+
+[node name="Label" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
+pixel_size = 0.003
+billboard = 1
+texture = SubResource( 37 )
+
+[node name="Viewport" type="Viewport" parent="Label"]
+size = Vector2( 101, 55 )
+transparent_bg = true
+render_target_v_flip = true
+
+[node name="Label" type="Label" parent="Label/Viewport"]
+margin_right = 101.0
+margin_bottom = 55.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+text = "Steps"
+
+[node name="Step" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0.6 )
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="Step"]
+shape = SubResource( 34 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Step"]
+mesh = SubResource( 35 )
+material/0 = SubResource( 36 )
+
+[node name="Step2" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0.4 )
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="Step2"]
+shape = SubResource( 34 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Step2"]
+mesh = SubResource( 35 )
+material/0 = SubResource( 36 )
+
+[node name="Step3" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.2 )
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="Step3"]
+shape = SubResource( 34 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Step3"]
+mesh = SubResource( 35 )
+material/0 = SubResource( 36 )
+
+[node name="Step4" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 4.76837e-07 )
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="Step4"]
+shape = SubResource( 34 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Step4"]
+mesh = SubResource( 35 )
+material/0 = SubResource( 36 )
+
+[node name="Step5" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, -0.2 )
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="Step5"]
+shape = SubResource( 34 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Step5"]
+mesh = SubResource( 35 )
+material/0 = SubResource( 36 )
+
+[node name="Step6" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -0.4 )
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="Step6"]
+shape = SubResource( 34 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Step6"]
+mesh = SubResource( 35 )
+material/0 = SubResource( 36 )

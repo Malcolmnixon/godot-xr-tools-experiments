@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://demo/assets/wahooney.itch.io/white_grid.png" type="Texture" id=1]
+
+[sub_resource type="ViewportTexture" id=30]
+viewport_path = NodePath("Label/Viewport")
+
+[sub_resource type="DynamicFontData" id=7]
+font_path = "res://demo/assets/fonts.google.com/OpenSans-VariableFont_wdth,wght.ttf"
+
+[sub_resource type="DynamicFont" id=8]
+size = 40
+font_data = SubResource( 7 )
+
+[sub_resource type="CubeMesh" id=27]
+size = Vector3( 1, 0.2, 2 )
+
+[sub_resource type="SpatialMaterial" id=28]
+albedo_color = Color( 1, 0.501961, 0, 1 )
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 2, 3, 1 )
+
+[sub_resource type="BoxShape" id=29]
+extents = Vector3( 0.5, 0.1, 1 )
+
+[node name="Ramp 30 Degrees" type="Spatial"]
+
+[node name="Label" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
+pixel_size = 0.003
+billboard = 1
+texture = SubResource( 30 )
+
+[node name="Viewport" type="Viewport" parent="Label"]
+size = Vector2( 307, 55 )
+transparent_bg = true
+render_target_v_flip = true
+
+[node name="Label" type="Label" parent="Label/Viewport"]
+margin_right = 265.0
+margin_bottom = 55.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+text = "30 Degree Ramp"
+
+[node name="Ramp" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0.414, 0 )
+collision_layer = 2
+collision_mask = 0
+
+[node name="MeshInstance" type="MeshInstance" parent="Ramp"]
+transform = Transform( 1, -0.000541052, 0, 0.000541052, 1, -2.98023e-08, 1.45519e-11, 2.98023e-08, 1, 0, 0, 0 )
+mesh = SubResource( 27 )
+material/0 = SubResource( 28 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Ramp"]
+shape = SubResource( 29 )
